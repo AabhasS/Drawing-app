@@ -1,4 +1,4 @@
-import 'package:doda/x.dart';
+import 'package:doda/discussion-board.dart';
 import 'package:flutter/material.dart';
 
 class DrawingProfile extends StatefulWidget {
@@ -17,7 +17,7 @@ class _DrawingProfileState extends State<DrawingProfile> {
       ),
       body: Center(
           child: ImageWithOverlays(
-        [],
+        [Offset(22, 16)],
         drawing: widget.drawing,
       )),
     );

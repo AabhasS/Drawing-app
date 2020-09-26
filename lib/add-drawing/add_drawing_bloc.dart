@@ -86,7 +86,7 @@ class AddDrawingBloc extends Bloc<AddDrawingEvent, AddDrawingState> {
     final StorageTaskSnapshot downloadUrl = (await uploadTask.onComplete);
     final String url = (await downloadUrl.ref.getDownloadURL());
     print("URL is $url");
-    _firebaseService.createDrawing(url, filename);
+    await _firebaseService.createDrawing(url, filename);
 
     yield UploadedDrawing();
   }

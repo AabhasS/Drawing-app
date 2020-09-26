@@ -17,6 +17,7 @@ class FirebaseService {
     database.collection("drawings").add({
       'title': title,
       'image': url,
+      'timeStamp': DateTime.now().toIso8601String()
     }).catchError((e) {
       print("Failed uploading");
     });
