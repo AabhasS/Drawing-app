@@ -1,4 +1,5 @@
-import 'package:doda/x.dart';
+import 'package:doda/drawings/drawings-list.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class _GesturePainter extends CustomPainter {
@@ -230,12 +231,8 @@ class GestureDemoState extends State<GestureDemo> {
   }
 }
 
-void main() {
-  runApp(MaterialApp(
-    theme: ThemeData.dark(),
-    home: Scaffold(
-      appBar: AppBar(title: const Text('Gestures Demo')),
-      body: ImageWithOverlays([]),
-    ),
-  ));
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MaterialApp(theme: ThemeData.dark(), home: DrawingList()));
 }
