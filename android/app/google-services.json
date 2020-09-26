@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "491370027904",
+    "firebase_url": "https://drawing-app-d6f00.firebaseio.com",
+    "project_id": "drawing-app-d6f00",
+    "storage_bucket": "drawing-app-d6f00.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:491370027904:android:7e11585559f7bb11d93f65",
+        "android_client_info": {
+          "package_name": "com.doda"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "491370027904-tecf81gfd8kkqmqo4m5n4f3kd70v3crn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRVDDPie7B-cXNQ6Z643zLcpCRXXLI3r4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "491370027904-tecf81gfd8kkqmqo4m5n4f3kd70v3crn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
