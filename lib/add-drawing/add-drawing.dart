@@ -20,7 +20,7 @@ class _AddDrawingFormState extends State<AddDrawingForm> {
             builder: (context, state) {
           File _image = BlocProvider.of<AddDrawingBloc>(context).image;
           Widget photoWidget = Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 80),
+            padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 16),
             child: GestureDetector(
                 onTap: () {
                   BlocProvider.of<AddDrawingBloc>(context)
@@ -29,14 +29,23 @@ class _AddDrawingFormState extends State<AddDrawingForm> {
                 child: Container(
                   height: 200,
                   decoration: BoxDecoration(
-                      color: Colors.grey[800],
+                      border: Border.all(color: Colors.black.withOpacity(0.2)),
                       borderRadius: BorderRadius.all(Radius.circular(20))),
                   child: Center(
-                    child: Icon(
-                      Icons.camera,
-                      size: 100,
-                    ),
-                  ),
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Icon(
+                        Icons.camera,
+                        color: Colors.black.withOpacity(0.2),
+                        size: 100,
+                      ),
+                      Text(
+                        "Add Picture",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  )),
                 )),
           );
           if (state is PictureAdded && _image != null) {
@@ -65,6 +74,7 @@ class _AddDrawingFormState extends State<AddDrawingForm> {
 
           return Scaffold(
             appBar: AppBar(
+              backgroundColor: Theme.of(context).accentColor,
               title: Text("Add Drawing"),
             ),
             body: state is UploadingDrawing
@@ -87,22 +97,30 @@ class _AddDrawingFormState extends State<AddDrawingForm> {
                           },
                         ),
                       ),
-                      RaisedButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                        ),
-                        color: Theme.of(context).accentColor,
-                        onPressed: () {
-                          BlocProvider.of<AddDrawingBloc>(context)
-                              .add(SavePicture());
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => DrawingList()));
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 50, vertical: 16),
-                          child: Text("Save"),
+                      Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 50, vertical: 16),
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                          ),
+                          color: Theme.of(context).accentColor,
+                          onPressed: () {
+                            BlocProvider.of<AddDrawingBloc>(context)
+                                .add(SavePicture());
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => DrawingList()));
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 50, vertical: 16),
+                            child: Text(
+                              "Save",
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.white),
+                            ),
+                          ),
                         ),
                       )
                     ],

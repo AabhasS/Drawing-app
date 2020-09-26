@@ -5,12 +5,12 @@ class FirebaseService {
 
   Future<List<Map<String, dynamic>>> getDrawings() async {
     List<Map<String, dynamic>> list = [];
-    database.collection("drawings").get().then((value) {
+    await database.collection("drawings").get().then((value) {
       value.docs.forEach((element) {
         list.add(element.data());
       });
     });
-    return list;
+    return Future.value(list);
   }
 
   Future<void> createDrawing(String url, String title) async {

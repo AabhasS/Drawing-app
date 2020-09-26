@@ -234,5 +234,6 @@ class GestureDemoState extends State<GestureDemo> {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MaterialApp(theme: ThemeData.dark(), home: DrawingList()));
+  runApp(MaterialApp(
+      theme: ThemeData(accentColor: Color(0xff2867B2)), home: DrawingList()));
 }

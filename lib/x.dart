@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ImageWithOverlays extends StatefulWidget {
+  final Map<String, dynamic> drawing;
   final List<FractionalOffset> fractionalOffsets;
-  ImageWithOverlays(this.fractionalOffsets);
+  ImageWithOverlays(this.fractionalOffsets, {this.drawing});
 
   @override
   _ImageWithOverlaysState createState() => _ImageWithOverlaysState();
@@ -36,7 +37,8 @@ class _ImageWithOverlaysState extends State<ImageWithOverlays> {
                 child: Stack(
               children: <Widget>[
                 Image.network(
-                  'https://picsum.photos/250?image=9',
+                  widget.drawing["image"] ??
+                      'https://picsum.photos/250?image=9',
                 ),
               ]..addAll(_getOverlays(context)),
             )),
