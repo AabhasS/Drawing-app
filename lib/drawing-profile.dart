@@ -15,11 +15,9 @@ class _DrawingProfileState extends State<DrawingProfile> {
       appBar: AppBar(
         title: Text("Profile"),
       ),
-      body: Center(
-          child: ImageWithOverlays(
-        [Offset(22, 16)],
+      body: DrawingWithMarkers(
         drawing: widget.drawing,
-      )),
+      ),
     );
   }
 }

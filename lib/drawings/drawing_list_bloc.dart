@@ -11,11 +11,15 @@ part 'drawing_list_state.dart';
 class DrawingListBloc extends Bloc<DrawingListEvent, DrawingListState> {
   DrawingListBloc() : super(DrawingListInitial());
   FirebaseService _firebaseService = FirebaseService();
+  bool change = false;
   @override
   Stream<DrawingListState> mapEventToState(
     DrawingListEvent event,
   ) async* {
-    if (event is GetList) {
+    _firebaseService.listenToChange().listen((event) {
+      change = true;
+    });
+    if (event is GetList || change) {
       yield LoadingDrawingList();
       try {
         yield* _getList();

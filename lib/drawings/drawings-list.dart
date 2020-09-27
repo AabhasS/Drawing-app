@@ -3,6 +3,7 @@ import 'package:doda/drawing-profile.dart';
 import 'package:doda/drawings/drawing_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 class DrawingList extends StatefulWidget {
   @override
@@ -37,6 +38,8 @@ class _DrawingListState extends State<DrawingList> {
             } else if (state is LoadingDrawingList) {
               _widget = Center(child: CircularProgressIndicator());
             } else if (state is LoadedDrawingList) {
+              DateFormat formatter = DateFormat('dd/MM/yy H:mm');
+
               _widget = ListView(
                   children: state.drawings.map((e) {
                 return Padding(
@@ -55,15 +58,26 @@ class _DrawingListState extends State<DrawingList> {
                               Border.all(color: Colors.black.withOpacity(0.1)),
                           borderRadius: BorderRadius.circular(10)),
                       child: ListTile(
-                        leading: CircleAvatar(
-                            radius: 30,
-                            backgroundImage: NetworkImage(e["image"])),
-                        title: Text(
-                          e["title"] ?? "hh",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        subtitle: Text(e["markers"]?.toString() ?? "--"),
-                      ),
+                          leading: CircleAvatar(
+                              radius: 30,
+                              backgroundImage: NetworkImage(e["image"])),
+                          title: Text(
+                            e["title"] ?? "hh",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                  "${(e["markers"] as List<dynamic>)?.length ?? 0}"),
+                              Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Text(e["timeStamp"] != null
+                                      ? formatter.format(
+                                          DateTime.parse(e["timeStamp"]))
+                                      : "")),
+                            ],
+                          )),
                     ),
                   ),
                 );
