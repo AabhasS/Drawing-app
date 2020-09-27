@@ -36,11 +36,12 @@ class FirebaseService {
     await database.collection("drawings").doc(docId).update({
       "markers": FieldValue.arrayUnion([
         {
+          "title": title ?? "",
+          "description": description ?? "",
+          'timeStamp': DateTime.now().toIso8601String(),
           "offset": {
             "x": offset.dx,
             "y": offset.dy,
-            "title": title ?? "",
-            "description": description ?? ""
           }
         }
       ])

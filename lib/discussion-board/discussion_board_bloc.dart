@@ -18,13 +18,13 @@ class DiscussionBoardBloc
     DiscussionBoardEvent event,
   ) async* {
     if (event is GetMarkers) {
-      yield* _getMarkerOffset(await _updatedList(event.drawing["docId"]));
+      yield* _getMarkerOffset(await _updatedList(event.drawing["docId"]) ?? []);
     }
     if (event is CreateMarker) {
       yield UploadingMarker();
       if (await _addMarkerToFirebase(event.drawingId, event.markerPosition,
           title: event.title, description: event.description)) {
-        yield* _getMarkerOffset(await _updatedList(event.drawingId));
+        yield* _getMarkerOffset(await _updatedList(event.drawingId) ?? []);
       }
     }
   }

@@ -1,4 +1,5 @@
 import 'package:doda/discussion-board/discussion_board_bloc.dart';
+import 'package:doda/marker-list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vector_math/vector_math.dart' as vector;
@@ -41,56 +42,74 @@ class _DrawingWithMarkersState extends State<DrawingWithMarkers> {
 
         if (state is UploadingMarker) {}
 
-        return GestureDetector(
-            onScaleStart: _handleScaleStart,
-            onScaleUpdate: _handleScaleUpdate,
-            onTapDown: (details) {
-              showDialog(
-                  context: context,
-                  child: new AlertDialog(
-                    actions: [
-                      RaisedButton(
-                        onPressed: () {
-                          BlocProvider.of<DiscussionBoardBloc>(context).add(
-                              CreateMarker(
-                                  drawingId: widget.drawing["docId"],
-                                  title: titleController.text,
-                                  description: descriptionController.text,
-                                  markerPosition: _getOffset(
-                                      context, details.globalPosition)));
-                          Navigator.of(context).pop();
-                        },
-                        color: Theme.of(context).accentColor,
-                        child: Text("Create"),
-                      )
-                    ],
-                    title: TextField(
-                      controller: titleController,
-                      decoration: InputDecoration(labelText: "Title"),
-                    ),
-                    content: TextField(
-                      controller: descriptionController,
-                      decoration: InputDecoration(labelText: "Description"),
-                    ),
-                  ));
-            },
-            // onLongPress: _handleScaleReset,
-            child: Transform(
-              transform: Matrix4.diagonal3Values(_zoom, _zoom, 1.0) +
-                  Matrix4.translationValues(_offset.dx, _offset.dy, 0.0),
-              child: Center(
-                child: Container(
-                    child: Stack(
-                  children: <Widget>[
-                    Image.network(
-                      widget.drawing["image"] ??
-                          'https://picsum.photos/250?image=9',
-                      fit: BoxFit.fill,
-                    ),
-                  ]..addAll(markerWidgets),
-                )),
-              ),
-            ));
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Theme.of(context).accentColor,
+            title: Text("Profile"),
+            actions: [
+              state is MarkersLoaded
+                  ? GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => MarkerList(
+                                  markerList: state.markerList,
+                                )));
+                      },
+                      child: Center(child: Text("See all Markers")))
+                  : Container()
+            ],
+          ),
+          body: GestureDetector(
+              onScaleStart: _handleScaleStart,
+              onScaleUpdate: _handleScaleUpdate,
+              onLongPressStart: (details) {
+                showDialog(
+                    context: context,
+                    child: new AlertDialog(
+                      actions: [
+                        RaisedButton(
+                          onPressed: () {
+                            BlocProvider.of<DiscussionBoardBloc>(context).add(
+                                CreateMarker(
+                                    drawingId: widget.drawing["docId"],
+                                    title: titleController.text,
+                                    description: descriptionController.text,
+                                    markerPosition: _getOffset(
+                                        context, details.globalPosition)));
+                            Navigator.of(context).pop();
+                          },
+                          color: Theme.of(context).accentColor,
+                          child: Text("Create new marker"),
+                        )
+                      ],
+                      title: TextField(
+                        controller: titleController,
+                        decoration: InputDecoration(labelText: "Title"),
+                      ),
+                      content: TextField(
+                        controller: descriptionController,
+                        decoration: InputDecoration(labelText: "Description"),
+                      ),
+                    ));
+              },
+              // onLongPress: _handleScaleReset,
+              child: Transform(
+                transform: Matrix4.diagonal3Values(_zoom, _zoom, 1.0) +
+                    Matrix4.translationValues(_offset.dx, _offset.dy, 0.0),
+                child: Center(
+                  child: Container(
+                      child: Stack(
+                    children: <Widget>[
+                      Image.network(
+                        widget.drawing["image"] ??
+                            'https://picsum.photos/250?image=9',
+                        fit: BoxFit.fill,
+                      ),
+                    ]..addAll(markerWidgets),
+                  )),
+                ),
+              )),
+        );
       }),
     );
   }
@@ -143,12 +162,12 @@ class _DrawingWithMarkersState extends State<DrawingWithMarkers> {
         showDialog(
             context: context,
             child: AlertDialog(
-                title: Text(marker["offset"]["title"].toString().length != 0
-                    ? marker["offset"]["title"]
+                title: Text(marker["title"].toString().length != 0
+                    ? marker["title"]
                     : "No data"),
                 content: Container(
                   height: 100,
-                  child: Text(marker["offset"]["description"] ?? "No data"),
+                  child: Text(marker["description"] ?? "No data"),
                 )));
       },
       icon: Icon(

@@ -1,5 +1,5 @@
 import 'package:doda/add-drawing/add-drawing.dart';
-import 'package:doda/drawing-profile.dart';
+import 'package:doda/discussion-board/discussion-board.dart';
 import 'package:doda/drawings/drawing_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,6 +33,9 @@ class _DrawingListState extends State<DrawingList> {
               height: 100,
               color: Colors.redAccent,
             );
+            // if (BlocProvider.of<DrawingListBloc>(context).change) {
+            //   BlocProvider.of<DrawingListBloc>(context).add(GetList());
+            // }
             if (state is DrawingListInitial) {
               BlocProvider.of<DrawingListBloc>(context).add(GetList());
             } else if (state is LoadingDrawingList) {
@@ -48,7 +51,7 @@ class _DrawingListState extends State<DrawingList> {
                   child: GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => DrawingProfile(
+                          builder: (context) => DrawingWithMarkers(
                                 drawing: e,
                               )));
                     },

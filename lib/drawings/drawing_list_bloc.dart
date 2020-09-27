@@ -16,10 +16,7 @@ class DrawingListBloc extends Bloc<DrawingListEvent, DrawingListState> {
   Stream<DrawingListState> mapEventToState(
     DrawingListEvent event,
   ) async* {
-    _firebaseService.listenToChange().listen((event) {
-      change = true;
-    });
-    if (event is GetList || change) {
+    if (event is GetList) {
       yield LoadingDrawingList();
       try {
         yield* _getList();
